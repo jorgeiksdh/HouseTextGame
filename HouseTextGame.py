@@ -11,145 +11,131 @@
 
 """
 
-jugador = [0,0]
-puertas = ((-2,3),(0,0))
-sala1 = ((-1,1), (0,1), (1,1), (-1,2), (0,2), (1,2), (-1,3),(0,3),(1,3))
-muros = ((-2,0),(-1,0),(1,0),(2,0),(-2,1),(2,1),(-2,2),(2,2),(2,3),(-2,4),(-1,4),(0,4),(1,4),(2,4))
+player = [0,0]
+doors = ((-2,3),(0,0))
+room1 = ((-1,1), (0,1), (1,1), (-1,2), (0,2), (1,2), (-1,3),(0,3),(1,3))
+walls = ((-2,0),(-1,0),(1,0),(2,0),(-2,1),(2,1),(-2,2),(2,2),(2,3),(-2,4),(-1,4),(0,4),(1,4),(2,4))
 flag = 1
 
-def avanzar(a, b):
+def move(a, b):
     """
         Esta función va a cambiar la posición del jugador de acuerdo a las
         instrucciones que le proporcione el usuario
 
     """
+    status = 1
     if a == 1:
         for x in range(b):
-            jugador[1] += 1
-            posicion = tuple(jugador)
-            if posicion in muros:
-                jugador[1] -= 1
-                print("Has topado con un muro")
+            player[1] += 1
+            position = tuple(player)
+            if position in walls:
+                player[1] -= 1
+                print("\nHas topado con un muro\n")
                 break
-            elif posicion == (-2,3):
-                print("¡Felicidades! ¡Encontraste la salida!")
-                flag = 0
+            elif position == (-2,3):
+                print("\n¡Felicidades! ¡Encontraste la salida!\n")
+                status = 0
+                break
             else:
                 continue
     elif a == 2:
         for x in range(b):
-            jugador[1] -= 1
-            posicion = tuple(jugador)
-            if posicion in muros:
-                jugador[1] += 1
-                print("Has topado con un muro")
+            player[1] -= 1
+            position = tuple(player)
+            if position in walls:
+                player[1] += 1
+                print("\nHas topado con un muro\n")
                 break
-            elif posicion == (-2,3):
-                print("¡Felicidades! ¡Encontraste la salida!")
-                flag = 0
+            elif position == (-2,3):
+                print("\n¡Felicidades! ¡Encontraste la salida!\n")
+                status = 0
+                break
             else:
                 continue
     elif a == 3:
         for x in range(b):
-            jugador[0] += 1
-            posicion = tuple(jugador)
-            if posicion in muros:
-                jugador[0] -= 1
-                print("Has topado con un muro")
+            player[0] += 1
+            position = tuple(player)
+            if position in walls:
+                player[0] -= 1
+                print("\nHas topado con un muro\n")
                 break
-            elif posicion == (-2,3):
-                print("¡Felicidades! ¡Encontraste la salida!")
-                flag = 0
+            elif position == (-2,3):
+                print("\n¡Felicidades! ¡Encontraste la salida!\n")
+                status = 0
+                break
             else:
                 continue
     elif a == 4:
         for x in range(b):
-            jugador[0] -= 1
-            posicion = tuple(jugador)
-            if posicion in muros:
-                jugador[0] += 1
-                print("Has topado con un muro")
+            player[0] -= 1
+            position = tuple(player)
+            if position in walls:
+                player[0] += 1
+                print("\nHas topado con un muro\n")
                 break
-            elif posicion == (-2,3):
-                print("¡Felicidades! ¡Encontraste la salida!")
-                flag = 0
+            elif position == (-2,3):
+                print("\n¡Felicidades! ¡Encontraste la salida!\n")
+                status = 0
+                break
             else:
                 continue
+    return status
 
-def compararPosicion(a, b):
+def comparePosition(a):
     """
         Esta función va a comparar la posición del jugador con la posición
         de la entrada y la salida de la casa, así como de las puertas de las
         habitaciones.
 
     """
-    posicion = (a, b)
-    if posicion == (0,0):
-        print("Has regresado a tu punto de partida")
+    position = tuple(a)
+    if position == (0,0):
+        print("\nHas regresado a tu punto de partida\n")
 
-def informacion(a, b):
+def info(a):
     """
         Esta función va a proporcionar información de la habitación de acuerdo
         a la posición del jugador.
 
     """
-    posicion = (a, b)
-    if posicion in sala1:
-        print("Estás parado en la sala principal. Por el momento es una habitación vacía.")
-    if posicion == (0,0):
-        print("Estás en la puerta principal")
+    position = tuple(a)
+    if position in room1:
+        print("\nEstás parado en la sala principal. Por el momento es una habitación vacía.\n")
+    if position == (0,0):
+        print("\nEstás en la puerta principal\n")
 
 while flag == 1:
-    print("")
-    print("########################################")
-    print("##                                    ##")
-    print("##   ** Bienvenido a la Gran Casa **  ##")
-    print("##                                    ##")
-    print("##   Opciones:                        ##")
-    print("##   1 -> Avanzar                     ##")
-    print("##   2 -> Información del cuarto      ##")
-    print("##   3 -> Debug: posición             ##")
-    print("##   4 -> Salir                       ##")
-    print("##                                    ##")
-    print("########################################")
+    mainMenu = open("menus/main.txt", "r")
+    display = mainMenu.read()
+    print("\n"+display+"\n")
+    mainMenu.close()
+    selection = int(input("\nIntroduzca su selección: "))
     print("")
 
-    seleccion = int(input("Introduzca su selección: "))
-
-    if seleccion == 1:
+    if selection == 1:
+        directionMenu = open("menus/direction.txt", "r")
+        display = directionMenu.read()
+        print("\n"+display+"\n")
+        directionMenu.close()
+        a = int(input("\nIntroduce tu seleccion: "))
         print("")
-        print("########################################")
-        print("##                                    ##")
-        print("##   Elige a dónde quieres moverte:   ##")
-        print("##   1 -> Norte                       ##")
-        print("##   2 -> Sur                         ##")
-        print("##   3 -> Este                        ##")
-        print("##   4 -> Oeste                       ##")
-        print("##                                    ##")
-        print("########################################")
+
+        stepsMenu = open("menus/steps.txt", "r")
+        display = stepsMenu.read()
+        print("\n"+display+"\n")
+        b = int(input("\nIntroduce el número de pasos: "))
         print("")
-        a = int(input("Introduce tu seleccion: "))
 
-        print("")
-        print("########################################")
-        print("##                                    ##")
-        print("##    Elige cuantos pasos moverte:    ##")
-        print("##       (tres pasos por turno)       ##")
-        print("##                                    ##")
-        print("########################################")
-        print("")
-        b = int(input("Introduce el número de pasos: "))
+        flag = (move(a, b))
+        comparePosition(player)
 
-        avanzar(a, b)
-        a, b = jugador[0], jugador[1]
-        compararPosicion(a, b)
+    elif selection == 2:
+        info(player)
 
-    elif seleccion == 2:
-        a, b = jugador[0], jugador[1]
-        informacion(a, b)
+    elif selection == 3:
+        print(player)
+        print(flag)
 
-    elif seleccion == 3:
-        print(jugador)
-
-    elif seleccion == 4:
+    elif selection == 4:
         flag = 0

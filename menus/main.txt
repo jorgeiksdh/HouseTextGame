@@ -1,0 +1,11 @@
+########################################
+##                                    ##
+##   ** Bienvenido a la Gran Casa **  ##
+##                                    ##
+##   Opciones:                        ##
+##   1 -> Avanzar                     ##
+##   2 -> Información del cuarto      ##
+##   3 -> Debug: posición             ##
+##   4 -> Salir                       ##
+##                                    ##
+########################################
