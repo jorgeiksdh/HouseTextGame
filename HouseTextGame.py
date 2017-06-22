@@ -12,9 +12,14 @@
 """
 
 player = [0,0]
-doors = ((-2,3),(0,0))
-room1 = ((-1,1), (0,1), (1,1), (-1,2), (0,2), (1,2), (-1,3),(0,3),(1,3))
-walls = ((-2,0),(-1,0),(1,0),(2,0),(-2,1),(2,1),(-2,2),(2,2),(2,3),(-2,4),(-1,4),(0,4),(1,4),(2,4))
+start = (0,0)
+end = (-5,6)
+doors = ((-4,5),(-2,3))
+room1 = ((-1, 1), (-1, 2), (-1, 3), (0, 1), (0, 2), (0, 3), (1, 1), (1, 2), (1, 3))
+room2 = ((-5, 3), (-5, 4), (-5, 5), (-4, 3), (-4, 4), (-4, 5), (-3, 3), (-3, 4), (-3, 5))
+walls = ((-2, 0), (-2, 1), (-2, 2), (-2, 4), (-1, 0), (-1, 4), (0, 4), (1, 0), (1, 4), (2, 0), (2, 1), (2, 2), (2, 3), (2, 4),(-6, 2), (-6, 3), (-6, 4), (-6, 5), (-6, 6), (-5, 2), (-4, 2), (-4, 6), (-3, 2), (-3, 6), (-2, 5), (-2, 6))
+checkpoint = None
+checkpointCounter = 4
 flag = 1
 
 def move(a, b):
@@ -23,6 +28,7 @@ def move(a, b):
         instrucciones que le proporcione el usuario
 
     """
+    checkpoint = None
     status = 1
     if a == 1:
         for x in range(b):
@@ -32,10 +38,13 @@ def move(a, b):
                 player[1] -= 1
                 print("\nHas topado con un muro\n")
                 break
-            elif position == (-2,3):
-                print("\n¡Felicidades! ¡Encontraste la salida!\n")
+            elif position == end:
+                print("\n¡Felicidades! ¡Encontraste la salida!\n",player)
                 status = 0
                 break
+            elif position in doors:
+                checkpoint = list(position)
+                print("\nAcabas de cruzar una puerta",checkpoint)
             else:
                 continue
     elif a == 2:
@@ -46,10 +55,13 @@ def move(a, b):
                 player[1] += 1
                 print("\nHas topado con un muro\n")
                 break
-            elif position == (-2,3):
-                print("\n¡Felicidades! ¡Encontraste la salida!\n")
+            elif position == end:
+                print("\n¡Felicidades! ¡Encontraste la salida!\n",player)
                 status = 0
                 break
+            elif position in doors:
+                checkpoint = list(position)
+                print("\nAcabas de cruzar una puerta",checkpoint)
             else:
                 continue
     elif a == 3:
@@ -60,10 +72,13 @@ def move(a, b):
                 player[0] -= 1
                 print("\nHas topado con un muro\n")
                 break
-            elif position == (-2,3):
-                print("\n¡Felicidades! ¡Encontraste la salida!\n")
+            elif position == end:
+                print("\n¡Felicidades! ¡Encontraste la salida!\n",player)
                 status = 0
                 break
+            elif position in doors:
+                checkpoint = list(position)
+                print("\nAcabas de cruzar una puerta",checkpoint)
             else:
                 continue
     elif a == 4:
@@ -74,13 +89,16 @@ def move(a, b):
                 player[0] += 1
                 print("\nHas topado con un muro\n")
                 break
-            elif position == (-2,3):
-                print("\n¡Felicidades! ¡Encontraste la salida!\n")
+            elif position == end:
+                print("\n¡Felicidades! ¡Encontraste la salida!\n",player)
                 status = 0
                 break
+            elif position in doors:
+                checkpoint = list(position)
+                print("\nAcabas de cruzar una puerta",checkpoint)
             else:
                 continue
-    return status
+    return [status, checkpoint]
 
 def comparePosition(a):
     """
@@ -90,8 +108,12 @@ def comparePosition(a):
 
     """
     position = tuple(a)
-    if position == (0,0):
-        print("\nHas regresado a tu punto de partida\n")
+    if position == start:
+        print("\nEstás en el punto de partida\n")
+    if position in doors:
+        print("\nEstás en una puerta, entre dos habitaciones\n")
+    if position == checkpoint:
+        print("\nEstás en la puerta de tu último check point\n")
 
 def info(a):
     """
@@ -101,11 +123,32 @@ def info(a):
     """
     position = tuple(a)
     if position in room1:
-        print("\nEstás parado en la sala principal. Por el momento es una habitación vacía.\n")
-    if position == (0,0):
+        print("\nEstás en la sala principal. Por el momento es una habitación vacía.\n")
+    elif position in room2:
+        print("\nEstás en el salón de música. Por el momento está vacío\n")
+    elif position == start:
         print("\nEstás en la puerta principal\n")
 
+def callCheckpoint(a):
+    """
+        Esta función actualiza las coordenadas del checkpoint y el contador
+        de usos del checkpoint.
+
+    """
+    checkpointCounter = a
+    checkpointCounter -= 1
+    if checkpointCounter == 1:
+        print("\nCUIDADO: sólo dispones de un retorno más al checkpoint\n")
+    elif checkpointCounter == 0:
+        print("\nAcabas de agotar tus retornos al checkpoint\n")
+    return checkpointCounter
+
+
 while flag == 1:
+
+    if checkpointCounter == 0:
+        flag == 0
+
     mainMenu = open("menus/main.txt", "r")
     display = mainMenu.read()
     print("\n"+display+"\n")
@@ -127,15 +170,31 @@ while flag == 1:
         b = int(input("\nIntroduce el número de pasos: "))
         print("")
 
-        flag = (move(a, b))
+        #flag = (move(a, b))
+        result = move(a, b)
+        flag = result[0]
+        checkpoint = result[1]
+        print(checkpoint)
         comparePosition(player)
 
     elif selection == 2:
         info(player)
 
     elif selection == 3:
+        if checkpoint == None:
+            print("\nAún no has registrado ningún chechkpoint\n")
+        elif checkpointCounter > 0:
+            print("\nSólo puedes regresar al último check point cuatro veces\n")
+            h = int(input("[1] Continuar\n[2] Cancelar\n[ ]: "))
+            if h == 1:
+                player = checkpoint
+                checkpointCounter = callCheckpoint(checkpointCounter)
+        else:
+            print("Agotaste tus retornos al checkpoint")
+
+    elif selection == 4:
         print(player)
         print(flag)
 
-    elif selection == 4:
+    elif selection == 5:
         flag = 0

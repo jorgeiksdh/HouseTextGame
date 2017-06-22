@@ -5,7 +5,8 @@
 ##   Opciones:                        ##
 ##   1 -> Avanzar                     ##
 ##   2 -> Información del cuarto      ##
-##   3 -> Debug: posición             ##
-##   4 -> Salir                       ##
+##   3 -> Regresar al check point     ## 
+##   4 -> Debug: posición             ##
+##   5 -> Salir                       ##
 ##                                    ##
 ########################################
