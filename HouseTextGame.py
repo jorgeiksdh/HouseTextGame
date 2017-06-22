@@ -1,7 +1,7 @@
 """
     *** House Text Game ***
 
-    @author: Jorge Galindo
+    @author: Jorge Galindo & Nelly Desu
     @company: Dev.f
 
     Éste es un juego de texto que te permite entrar en una casa y recorrer sus
