@@ -1,0 +1,13 @@
+########################################
+##                                    ##
+##  Ésta es la sala de música. en-    ##
+##  trar comenzó a sonar en el piano  ##
+##  desafinado una melodía que te     ##
+##  ha hecho estremecerte. Las pare-  ##
+##  des están cubiertas de estante-   ##
+##  rías que almacenan libros medie-  ##
+##  vales, la mayoría sobre alquimia. ##
+##  No te extrañaría encontrar el Ne- ##
+##  cronomicón aquí...                ##
+##                                    ##
+########################################

@@ -1,0 +1,11 @@
+########################################
+##                                    ##
+##  Ésta es la habitación principal;  ##
+##  Las cortinas oscuras no dejan     ##
+##  pasar la luz y te será difícil    ##
+##  encontrar la puerta secreta que   ##
+##  conduce a la siguiente habitación ##
+##  Ten cuidado con los libros que    ##
+##  están tirados por el suelo...     ##
+##                                    ##
+########################################
